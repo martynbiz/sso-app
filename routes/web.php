@@ -11,6 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     $value = session('key');
+//     if (is_null($value)) {
+//         Session::put('key', md5(rand()));
+//     }
+//     Session::save();
+//     // dd(session('key'));
+//
+//     return view('welcome');
+// });
+
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/login', 'HomeController@login')->name('login');

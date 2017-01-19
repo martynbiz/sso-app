@@ -7,6 +7,9 @@ sudo apt-get update
 
 sudo apt-get install -y apache2
 
+sudo a2enmod rewrite
+sudo service apache2 restart
+
 
 # ========================================
 # install mysql
@@ -22,9 +25,15 @@ sudo apt-get install -y mysql-server
 
 
 # ========================================
+# install redis
+
+sudo apt-get install -y redis-server
+
+
+# ========================================
 # install php
 
-sudo apt-get install -y php libapache2-mod-php php-mcrypt php-mysql php-curl php-mbstring php-xml
+sudo apt-get install -y php libapache2-mod-php php-mcrypt php-mysql php-curl php-mbstring php-xml php-redis
 
 
 # ========================================
@@ -38,7 +47,7 @@ sudo bash -c 'cat <<EOT >>/etc/apache2/sites-available/o-eco.conf
     ServerName o-eco.vagrant
     DocumentRoot /var/www/o-eco/website/public
 
-    <Directory var/www/o-eco/website/public/>
+    <Directory /var/www/o-eco/website/public/>
         Options FollowSymLinks
         AllowOverride All
     </Directory>
@@ -58,3 +67,10 @@ sudo service apache2 reload
 cd /var/www/o-eco/website
 php artisan key:generate
 php artisan config:clear
+
+# create databases
+echo "create database oeco_dev" | mysql -u root -p$MYSQL_ROOT_PASSWORD
+php artisan migrate
+
+# to curl sso.vagrant, we need to add it to the box's /etc/hosts
+sudo bash -c 'echo "192.168.33.11  sso.vagrant" >> /etc/hosts'
