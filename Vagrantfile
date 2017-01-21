@@ -37,10 +37,10 @@ Vagrant.configure("2") do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "../", "/var/www/o-eco", owner: "ubuntu", group: "www-data"
+  config.vm.synced_folder "./", "/var/www/o-eco", owner: "ubuntu", group: "www-data"
 
   # don't think we have any need to have the /vagrant file (same as synced /var/www/japantravel folder)
-  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.synced_folder "./", "/vagrant", disabled: true
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.

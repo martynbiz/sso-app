@@ -39,15 +39,13 @@ sudo apt-get install -y php libapache2-mod-php php-mcrypt php-mysql php-curl php
 # ========================================
 # setup virtual host
 
-PROJECT_ROOT = /var/www/o-eco
-
 # create apache config
 sudo bash -c 'cat <<EOT >>/etc/apache2/sites-available/o-eco.conf
 <VirtualHost *:80>
     ServerName o-eco.vagrant
-    DocumentRoot /var/www/o-eco/website/public
+    DocumentRoot /var/www/o-eco/public
 
-    <Directory /var/www/o-eco/website/public/>
+    <Directory /var/www/o-eco/public/>
         Options FollowSymLinks
         AllowOverride All
     </Directory>
@@ -64,7 +62,7 @@ sudo a2ensite o-eco.conf
 sudo service apache2 reload
 
 # clear cache and re-generate key for this box
-cd /var/www/o-eco/website
+cd /var/www/o-eco
 php artisan key:generate
 php artisan config:clear
 
